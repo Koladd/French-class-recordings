@@ -5,102 +5,187 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>French Group 6 — Class Recordings</title>
 <style>
+  @font-face{
+    font-family: 'Coolvetica';
+    src: local('Coolvetica');
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
   :root{
-    --ink:#1f2a24;
-    --paper:#faf7f0;
-    --moss:#3f5d44;
-    --moss-dark:#2c4230;
-    --gold:#b8893f;
-    --line:#dcd4c2;
+    --bg:#E8FAFE;
+    --card-header:#d3f0f9;
+    --card-body:#eaf8fc;
+    --ink:#10171a;
+    --sub:#5b6b6f;
+    --accent:#1ba8d6;
+    --pill:#10171a;
+    --line:#d2e9ee;
+    --noclass-bg:#dfe3e4;
+    --noclass-text:#8b9598;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    font-family:'Iowan Old Style','Palatino Linotype',Georgia,serif;
-    background:var(--paper);
+    font-family:'Geist','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:var(--bg);
     color:var(--ink);
-    padding:32px 16px 64px;
+    letter-spacing:.01em;
   }
-  .wrap{max-width:720px;margin:0 auto;}
+  .title-font{
+    font-family:'Coolvetica','Archivo Black',-apple-system,sans-serif;
+    font-weight:700;
+    letter-spacing:.01em;
+    line-height:1.015;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 96px;}
+
+  .brand{display:flex;align-items:center;margin-bottom:56px;}
+  .brand img{height:64px;display:block;}
+
   .eyebrow{
-    font-family:'Courier New',monospace;
-    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--gold);margin-bottom:6px;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--sub);margin-bottom:10px;font-weight:600;
   }
-  h1{font-size:32px;margin:0 0 4px;font-weight:600;letter-spacing:-.01em;color:var(--moss-dark);}
-  .sub{font-size:14.5px;color:#5c6b5f;margin:0 0 28px;line-height:1.5;}
-  .stats{display:flex;gap:18px;margin-bottom:28px;font-family:'Courier New',monospace;font-size:12px;color:#5c6b5f;}
-  .stats b{color:var(--moss-dark);font-size:15px;display:block;font-family:'Iowan Old Style',Georgia,serif;}
-  .row{
-    display:grid;grid-template-columns:104px 1fr;align-items:center;gap:14px;
-    padding:14px 4px;border-bottom:1px solid var(--line);
+  h1{font-size:48px;margin:0 0 12px;letter-spacing:-.01em;}
+  .sub{font-size:16px;color:var(--sub);margin:0 0 56px;font-weight:400;}
+
+  .section-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:24px;
   }
-  .row:first-child{border-top:1px solid var(--line);}
-  .date-badge{
-    font-family:'Courier New',monospace;font-size:12px;color:var(--moss-dark);
-    background:#eef1e9;border:1px solid var(--line);border-radius:3px;
-    padding:5px 8px;text-align:center;white-space:nowrap;
+  .section-head h2{font-size:26px;margin:0;}
+  .curriculum-select{
+    display:flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);border-radius:8px;
+    padding:8px 14px;font-size:13px;font-weight:600;color:var(--ink);
+    font-family:'Geist',-apple-system,sans-serif;
   }
-  .link a{color:var(--moss);text-decoration:none;font-size:14.5px;border-bottom:1px solid transparent;word-break:break-all;}
-  .link a:hover{border-bottom-color:var(--moss);}
-  footer{margin-top:32px;font-size:12px;color:#8a958a;font-family:'Courier New',monospace;}
+  .curriculum-select svg{width:12px;height:12px;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    margin-bottom:24px;
+  }
+  @media (max-width: 860px){ .grid{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--card-body);
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .card-header{
+    background:var(--card-header);
+    padding:18px 22px;
+    font-size:20px;
+  }
+  .card-body{padding:4px 22px 8px;}
+  .class-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .class-row:last-child{border-bottom:none;}
+  .class-meta b{display:block;font-size:15px;font-weight:700;margin-bottom:3px;font-family:'Geist',sans-serif;}
+  .class-meta span{font-size:13px;color:var(--sub);}
+  .listen, .no-class, .not-uploaded{
+    display:inline-flex;align-items:center;gap:6px;
+    border-radius:999px;
+    padding:9px 16px;
+    font-size:12.5px;font-weight:700;letter-spacing:.03em;
+    text-decoration:none;
+    white-space:nowrap;
+    flex-shrink:0;
+    margin-left:12px;
+  }
+  .listen{
+    background:var(--pill);color:var(--accent);
+  }
+  .listen:hover{opacity:.85;}
+  .no-class{
+    background:var(--noclass-bg);color:var(--noclass-text);
+    cursor:default;
+  }
+  .not-uploaded{
+    background:#b9c9d6;color:#4a5b6b;
+    cursor:default;
+  }
+
+  footer{
+    margin-top:48px;font-size:12px;color:var(--sub);
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">French Group 6 &middot; PrepMeWell</div>
-  <h1>Class Recordings</h1>
-  <p class="sub">Every recording link shared in the class announcements, dated to the actual class day.</p>
-  <div class="stats">
-    <div><b id="stat-count"></b>recordings</div>
-    <div><b id="stat-recent"></b>most recent class</div>
+
+  <div class="brand">
+    <img src="data:image/png;base64,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" alt="Prepmewell Language School">
   </div>
-  <div id="list"></div>
+
+  <div class="eyebrow">French Group 6</div>
+  <h1 class="title-font">Class Recordings</h1>
+  <p class="sub">Every class recording, dated to the actual class day</p>
+
+  <div class="section-head">
+    <h2 class="title-font">A1 Classes</h2>
+  </div>
+
+  <div id="weeks"></div>
+
   <footer>Last updated: <span id="updated"></span></footer>
 </div>
 
 <script>
-const ITEMS = [
-  { date: "2026-06-13", url: "https://drive.google.com/file/d/1WP4EMmB_9qFWZZR5SYkyT8LhnZKRV3Wi/view?usp=drivesdk" },
-  { date: "2026-06-12", url: "https://drive.google.com/file/d/1Gnu86wu7eTUmB_u4vW0jeOnwy5qcoWt2/view?usp=drivesdk" },
-  { date: "2026-06-07", url: "https://drive.google.com/file/d/1FjJQYKQU6i5S6D_lm-LM2MBbga7QvUrt/view?usp=drivesdk" },
-  { date: "2026-06-06", url: "https://drive.google.com/file/d/1pVB-8ifo2-tr47ZUr98i3IXecAGCrhED/view?usp=drivesdk" },
-  { date: "2026-06-05", url: "https://drive.google.com/file/d/1o1VRQTVa3JY-1fhI2gsyqEPp_6fMq-cV/view?usp=drivesdk" },
-  { date: "2026-05-31", url: "https://drive.google.com/file/d/1f5FYaiEA0Wj-1UHHjIfmZeN_ZGwxe_SP/view?usp=drivesdk" },
-  { date: "2026-05-30", url: "https://drive.google.com/file/d/1K1mLwddbUfUk_eXZaRZHuuC166LkiAVq/view?usp=drivesdk" },
-  { date: "2026-05-24", url: "https://drive.google.com/file/d/10mflNXuq2NUXvHUklgT7F4lovuWtm6_R/view?usp=drivesdk" },
-  { date: "2026-05-23", url: "https://drive.google.com/file/d/1hRZhDvS6nVq7RFhXFxQXm8dsZ4PNqSwQ/view?usp=drivesdk" },
-  { date: "2026-05-22", url: "https://drive.google.com/file/d/18wvdwdEd3LeV5DJKNpikY6ipDlTszxvd/view?usp=drivesdk" },
-  { date: "2026-05-17", url: "https://drive.google.com/file/d/1glVvEQDfRSMNScAogPpIHFgp2OqGlIN1/view?usp=drivesdk" },
-  { date: "2026-05-10", url: "https://drive.google.com/file/d/1XBCJHv0UzxJtpuK4PFs6lc-yAPU_u1Ae/view?usp=drivesdk" },
-  { date: "2026-05-09", url: "https://drive.google.com/file/d/1yv0Bz3vVR1zzaNRtjoGOfkYAPBaOpZR3/view?usp=drivesdk" },
-  { date: "2026-05-08", url: "https://drive.google.com/file/d/15b3kRwqwVvYg94pdvLOWHg4vFOsHjxUc/view?usp=drivesdk" },
-  { date: "2026-05-03", url: "https://drive.google.com/file/d/1sJi4czklwPEi76lNzFu2Vihgo0iKkzQ2/view?usp=drivesdk" },
-  { date: "2026-05-02", url: "https://drive.google.com/file/d/1MHyFVdeaq2fF-6RJ3-yDMtTwqs76e0mJ/view?usp=drivesdk" },
-  { date: "2026-05-01", url: "https://drive.google.com/file/d/1HSna3EWWqSnXU19zoPShxH6JZrcQPpLs/view?usp=drivesdk" },
-  { date: "2026-04-26", url: "https://drive.google.com/file/d/1JcLVFSFL_nqeaiN1dgkBGnwReFmNwmmd/view?usp=drivesdk" },
-  { date: "2026-04-25", url: "https://drive.google.com/file/d/1G0Hm5NLFDdLH66w3S-99N3yDOg4uUT2v/view?usp=drivesdk" },
-  { date: "2026-04-24", url: "https://drive.google.com/file/d/14VJ8iJjZc652JkjwMO1W-X8MlGFXDls3/view?usp=drivesdk" }
-];
+const WEEKS = [{"week": 1, "classes": [{"label": "Class 1", "date": "24-04-26", "day": "Friday", "url": "https://drive.google.com/file/d/14VJ8iJjZc652JkjwMO1W-X8MlGFXDls3/view?usp=drivesdk"}, {"label": "Class 2", "date": "25-04-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1G0Hm5NLFDdLH66w3S-99N3yDOg4uUT2v/view?usp=drivesdk"}, {"label": "Class 3", "date": "26-04-26", "day": "Sunday", "url": "https://drive.google.com/file/d/1JcLVFSFL_nqeaiN1dgkBGnwReFmNwmmd/view?usp=drivesdk"}]}, {"week": 2, "classes": [{"label": "Class 1", "date": "01-05-26", "day": "Friday", "url": "https://drive.google.com/file/d/1HSna3EWWqSnXU19zoPShxH6JZrcQPpLs/view?usp=drivesdk"}, {"label": "Class 2", "date": "02-05-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1MHyFVdeaq2fF-6RJ3-yDMtTwqs76e0mJ/view?usp=drivesdk"}, {"label": "Class 3", "date": "03-05-26", "day": "Sunday", "url": "https://drive.google.com/file/d/1sJi4czklwPEi76lNzFu2Vihgo0iKkzQ2/view?usp=drivesdk"}]}, {"week": 3, "classes": [{"label": "Class 1", "date": "08-05-26", "day": "Friday", "url": "https://drive.google.com/file/d/15b3kRwqwVvYg94pdvLOWHg4vFOsHjxUc/view?usp=drivesdk"}, {"label": "Class 2", "date": "09-05-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1yv0Bz3vVR1zzaNRtjoGOfkYAPBaOpZR3/view?usp=drivesdk"}, {"label": "Class 3", "date": "10-05-26", "day": "Sunday", "url": "https://drive.google.com/file/d/1XBCJHv0UzxJtpuK4PFs6lc-yAPU_u1Ae/view?usp=drivesdk"}]}, {"week": 4, "classes": [{"label": "Class 1", "date": "15-05-26", "day": "Friday", "url": null, "status": "not_uploaded"}, {"label": "Class 2", "date": "16-05-26", "day": "Saturday", "url": null, "status": "not_uploaded"}, {"label": "Class 3", "date": "17-05-26", "day": "Sunday", "url": "https://drive.google.com/file/d/1glVvEQDfRSMNScAogPpIHFgp2OqGlIN1/view?usp=drivesdk"}]}, {"week": 5, "classes": [{"label": "Class 1", "date": "22-05-26", "day": "Friday", "url": "https://drive.google.com/file/d/18wvdwdEd3LeV5DJKNpikY6ipDlTszxvd/view?usp=drivesdk"}, {"label": "Class 2", "date": "23-05-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1hRZhDvS6nVq7RFhXFxQXm8dsZ4PNqSwQ/view?usp=drivesdk"}, {"label": "Class 3", "date": "24-05-26", "day": "Sunday", "url": "https://drive.google.com/file/d/10mflNXuq2NUXvHUklgT7F4lovuWtm6_R/view?usp=drivesdk"}]}, {"week": 6, "classes": [{"label": "Class 1", "date": "29-05-26", "day": "Friday", "url": null}, {"label": "Class 2", "date": "30-05-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1K1mLwddbUfUk_eXZaRZHuuC166LkiAVq/view?usp=drivesdk"}, {"label": "Class 3", "date": "31-05-26", "day": "Sunday", "url": "https://drive.google.com/file/d/1f5FYaiEA0Wj-1UHHjIfmZeN_ZGwxe_SP/view?usp=drivesdk"}]}, {"week": 7, "classes": [{"label": "Class 1", "date": "05-06-26", "day": "Friday", "url": "https://drive.google.com/file/d/1o1VRQTVa3JY-1fhI2gsyqEPp_6fMq-cV/view?usp=drivesdk"}, {"label": "Class 2", "date": "06-06-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1pVB-8ifo2-tr47ZUr98i3IXecAGCrhED/view?usp=drivesdk"}, {"label": "Class 3", "date": "07-06-26", "day": "Sunday", "url": "https://drive.google.com/file/d/1FjJQYKQU6i5S6D_lm-LM2MBbga7QvUrt/view?usp=drivesdk"}]}, {"week": 8, "classes": [{"label": "Class 1", "date": "12-06-26", "day": "Friday", "url": "https://drive.google.com/file/d/1Gnu86wu7eTUmB_u4vW0jeOnwy5qcoWt2/view?usp=drivesdk"}, {"label": "Class 2", "date": "13-06-26", "day": "Saturday", "url": "https://drive.google.com/file/d/1WP4EMmB_9qFWZZR5SYkyT8LhnZKRV3Wi/view?usp=drivesdk"}, {"label": "Class 3", "date": "14-06-26", "day": "Sunday", "url": null, "status": "not_uploaded"}]}];
 
-function formatDate(iso){
-  const p = iso.split("-").map(Number);
-  const dt = new Date(p[0], p[1]-1, p[2]);
-  return dt.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
+const weeksContainer = document.getElementById("weeks");
+
+for (let i = 0; i < WEEKS.length; i += 3) {
+  const rowWeeks = WEEKS.slice(i, i + 3);
+  const grid = document.createElement("div");
+  grid.className = "grid";
+
+  rowWeeks.forEach(w => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const header = document.createElement("div");
+    header.className = "card-header title-font";
+    header.textContent = "Week " + w.week;
+    card.appendChild(header);
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    w.classes.forEach(c => {
+      const row = document.createElement("div");
+      row.className = "class-row";
+      const action = c.url
+        ? `<a class="listen" href="${c.url}" target="_blank" rel="noopener noreferrer">LISTEN &#8599;</a>`
+        : (c.status === "not_uploaded"
+            ? `<span class="not-uploaded">NOT UPLOADED</span>`
+            : `<span class="no-class">NO CLASS</span>`);
+      row.innerHTML = `
+        <div class="class-meta">
+          <b>${c.label}</b>
+          <span>${c.date} | ${c.day}</span>
+        </div>
+        ${action}
+      `;
+      body.appendChild(row);
+    });
+
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+
+  weeksContainer.appendChild(grid);
 }
 
-const sorted = [...ITEMS].sort((a,b)=>b.date.localeCompare(a.date));
-document.getElementById("stat-count").textContent = ITEMS.length;
-document.getElementById("stat-recent").textContent = sorted.length ? formatDate(sorted[0].date) : "—";
 document.getElementById("updated").textContent = new Date().toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
-
-const list = document.getElementById("list");
-sorted.forEach(item=>{
-  const row = document.createElement("div");
-  row.className = "row";
-  row.innerHTML = `<div class="date-badge">${formatDate(item.date)}</div><div class="link"><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.url}</a></div>`;
-  list.appendChild(row);
-});
 </script>
 </body>
 </html>
