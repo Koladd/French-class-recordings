@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>French Group 6 — Class Recordings</title>
+<style>
+  :root{
+    --ink:#1f2a24;
+    --paper:#faf7f0;
+    --moss:#3f5d44;
+    --moss-dark:#2c4230;
+    --gold:#b8893f;
+    --line:#dcd4c2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    background:var(--paper);
+    color:var(--ink);
+    padding:32px 16px 64px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+  .eyebrow{
+    font-family:'Courier New',monospace;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:6px;
+  }
+  h1{font-size:32px;margin:0 0 4px;font-weight:600;letter-spacing:-.01em;color:var(--moss-dark);}
+  .sub{font-size:14.5px;color:#5c6b5f;margin:0 0 28px;line-height:1.5;}
+  .stats{display:flex;gap:18px;margin-bottom:28px;font-family:'Courier New',monospace;font-size:12px;color:#5c6b5f;}
+  .stats b{color:var(--moss-dark);font-size:15px;display:block;font-family:'Iowan Old Style',Georgia,serif;}
+  .row{
+    display:grid;grid-template-columns:104px 1fr;align-items:center;gap:14px;
+    padding:14px 4px;border-bottom:1px solid var(--line);
+  }
+  .row:first-child{border-top:1px solid var(--line);}
+  .date-badge{
+    font-family:'Courier New',monospace;font-size:12px;color:var(--moss-dark);
+    background:#eef1e9;border:1px solid var(--line);border-radius:3px;
+    padding:5px 8px;text-align:center;white-space:nowrap;
+  }
+  .link a{color:var(--moss);text-decoration:none;font-size:14.5px;border-bottom:1px solid transparent;word-break:break-all;}
+  .link a:hover{border-bottom-color:var(--moss);}
+  footer{margin-top:32px;font-size:12px;color:#8a958a;font-family:'Courier New',monospace;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">French Group 6 &middot; PrepMeWell</div>
+  <h1>Class Recordings</h1>
+  <p class="sub">Every recording link shared in the class announcements, dated to the actual class day.</p>
+  <div class="stats">
+    <div><b id="stat-count"></b>recordings</div>
+    <div><b id="stat-recent"></b>most recent class</div>
+  </div>
+  <div id="list"></div>
+  <footer>Last updated: <span id="updated"></span></footer>
+</div>
+
+<script>
+const ITEMS = [
+  { date: "2026-06-13", url: "https://drive.google.com/file/d/1WP4EMmB_9qFWZZR5SYkyT8LhnZKRV3Wi/view?usp=drivesdk" },
+  { date: "2026-06-12", url: "https://drive.google.com/file/d/1Gnu86wu7eTUmB_u4vW0jeOnwy5qcoWt2/view?usp=drivesdk" },
+  { date: "2026-06-07", url: "https://drive.google.com/file/d/1FjJQYKQU6i5S6D_lm-LM2MBbga7QvUrt/view?usp=drivesdk" },
+  { date: "2026-06-06", url: "https://drive.google.com/file/d/1pVB-8ifo2-tr47ZUr98i3IXecAGCrhED/view?usp=drivesdk" },
+  { date: "2026-06-05", url: "https://drive.google.com/file/d/1o1VRQTVa3JY-1fhI2gsyqEPp_6fMq-cV/view?usp=drivesdk" },
+  { date: "2026-05-31", url: "https://drive.google.com/file/d/1f5FYaiEA0Wj-1UHHjIfmZeN_ZGwxe_SP/view?usp=drivesdk" },
+  { date: "2026-05-30", url: "https://drive.google.com/file/d/1K1mLwddbUfUk_eXZaRZHuuC166LkiAVq/view?usp=drivesdk" },
+  { date: "2026-05-24", url: "https://drive.google.com/file/d/10mflNXuq2NUXvHUklgT7F4lovuWtm6_R/view?usp=drivesdk" },
+  { date: "2026-05-23", url: "https://drive.google.com/file/d/1hRZhDvS6nVq7RFhXFxQXm8dsZ4PNqSwQ/view?usp=drivesdk" },
+  { date: "2026-05-22", url: "https://drive.google.com/file/d/18wvdwdEd3LeV5DJKNpikY6ipDlTszxvd/view?usp=drivesdk" },
+  { date: "2026-05-17", url: "https://drive.google.com/file/d/1glVvEQDfRSMNScAogPpIHFgp2OqGlIN1/view?usp=drivesdk" },
+  { date: "2026-05-10", url: "https://drive.google.com/file/d/1XBCJHv0UzxJtpuK4PFs6lc-yAPU_u1Ae/view?usp=drivesdk" },
+  { date: "2026-05-09", url: "https://drive.google.com/file/d/1yv0Bz3vVR1zzaNRtjoGOfkYAPBaOpZR3/view?usp=drivesdk" },
+  { date: "2026-05-08", url: "https://drive.google.com/file/d/15b3kRwqwVvYg94pdvLOWHg4vFOsHjxUc/view?usp=drivesdk" },
+  { date: "2026-05-03", url: "https://drive.google.com/file/d/1sJi4czklwPEi76lNzFu2Vihgo0iKkzQ2/view?usp=drivesdk" },
+  { date: "2026-05-02", url: "https://drive.google.com/file/d/1MHyFVdeaq2fF-6RJ3-yDMtTwqs76e0mJ/view?usp=drivesdk" },
+  { date: "2026-05-01", url: "https://drive.google.com/file/d/1HSna3EWWqSnXU19zoPShxH6JZrcQPpLs/view?usp=drivesdk" },
+  { date: "2026-04-26", url: "https://drive.google.com/file/d/1JcLVFSFL_nqeaiN1dgkBGnwReFmNwmmd/view?usp=drivesdk" },
+  { date: "2026-04-25", url: "https://drive.google.com/file/d/1G0Hm5NLFDdLH66w3S-99N3yDOg4uUT2v/view?usp=drivesdk" },
+  { date: "2026-04-24", url: "https://drive.google.com/file/d/14VJ8iJjZc652JkjwMO1W-X8MlGFXDls3/view?usp=drivesdk" }
+];
+
+function formatDate(iso){
+  const p = iso.split("-").map(Number);
+  const dt = new Date(p[0], p[1]-1, p[2]);
+  return dt.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
+}
+
+const sorted = [...ITEMS].sort((a,b)=>b.date.localeCompare(a.date));
+document.getElementById("stat-count").textContent = ITEMS.length;
+document.getElementById("stat-recent").textContent = sorted.length ? formatDate(sorted[0].date) : "—";
+document.getElementById("updated").textContent = new Date().toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
+
+const list = document.getElementById("list");
+sorted.forEach(item=>{
+  const row = document.createElement("div");
+  row.className = "row";
+  row.innerHTML = `<div class="date-badge">${formatDate(item.date)}</div><div class="link"><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.url}</a></div>`;
+  list.appendChild(row);
+});
+</script>
+</body>
+</html>
